@@ -415,3 +415,19 @@ h6,
 .copyright a:hover {
     color: var(--light);
 }
+/***********************************
+ Fade-in animation (moved from HTML)
+************************************/
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

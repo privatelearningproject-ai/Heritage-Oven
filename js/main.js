@@ -1,94 +1,98 @@
 (function ($) {
     "use strict";
 
-    // Spinner
-    var spinner = function () {
-        setTimeout(function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
-            }
-        }, 1);
-    };
-    spinner();
-    
-    
-    // Initiate the wowjs
-    new WOW().init();
+    /* ==============================
+       Spinner (remove after full load)
+    ============================== */
+    window.addEventListener('load', function () {
+        const spinner = document.getElementById('spinner');
+        if (spinner) spinner.classList.remove('show');
+    });
 
 
-    // Fixed Navbar
-    $('.fixed-top').css('top', $('.top-bar').height());
-    $(window).scroll(function () {
-        if ($(this).scrollTop()) {
-            $('.fixed-top').addClass('bg-dark').css('top', 0);
+    /* ==============================
+       WOW.js (DESKTOP ONLY)
+       Disabled on mobile for performance
+    ============================== */
+    if (window.innerWidth >= 768 && typeof WOW === "function") {
+        setTimeout(() => {
+            new WOW().init();
+        }, 500);
+    }
+
+
+    /* ==============================
+       Fixed Navbar + Back To Top
+       (single optimized scroll handler)
+    ============================== */
+    const $navbar = $('.fixed-top');
+    const $backToTop = $('.back-to-top');
+    const topBarHeight = $('.top-bar').length ? $('.top-bar').height() : 0;
+
+    $navbar.css('top', topBarHeight);
+
+    $(window).on('scroll', function () {
+        const scrollTop = $(this).scrollTop();
+
+        // Navbar background
+        if (scrollTop > 0) {
+            $navbar.addClass('bg-dark').css('top', 0);
         } else {
-            $('.fixed-top').removeClass('bg-dark').css('top', $('.top-bar').height());
+            $navbar.removeClass('bg-dark').css('top', topBarHeight);
         }
-    });
-    
-    
-    // Back to top button
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 300) {
-            $('.back-to-top').fadeIn('slow');
+
+        // Back to top button
+        if (scrollTop > 300) {
+            $backToTop.fadeIn('slow');
         } else {
-            $('.back-to-top').fadeOut('slow');
-        }
-    });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
-        return false;
-    });
-
-
-    // Header carousel
-    $(".header-carousel").owlCarousel({
-        autoplay: false,
-        smartSpeed: 1500,
-        loop: true,
-        nav: true,
-        dots: false,
-        items: 1,
-        navText : [
-            '<i class="bi bi-chevron-left"></i>',
-            '<i class="bi bi-chevron-right"></i>'
-        ]
-    });
-
-
-    // Facts counter
-    $('[data-toggle="counter-up"]').counterUp({
-        delay: 10,
-        time: 2000
-    });
-
-
-    // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
-        autoplay: false,
-        smartSpeed: 1000,
-        margin: 25,
-        loop: true,
-        center: true,
-        dots: false,
-        nav: true,
-        navText : [
-            '<i class="bi bi-chevron-left"></i>',
-            '<i class="bi bi-chevron-right"></i>'
-        ],
-        responsive: {
-            0:{
-                items:1
-            },
-            768:{
-                items:2
-            },
-            992:{
-                items:3
-            }
+            $backToTop.fadeOut('slow');
         }
     });
 
-    
+    $backToTop.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, 1200, 'easeInOutExpo');
+    });
+
+
+    /* ==============================
+       Header Carousel (light + delayed)
+    ============================== */
+    setTimeout(() => {
+        if ($('.header-carousel').length) {
+            $('.header-carousel').owlCarousel({
+                autoplay: true,
+                autoplayTimeout: 5000,
+                smartSpeed: 800,
+                loop: true,
+                items: 1,
+                dots: true,
+                nav: false
+            });
+        }
+    }, 700);
+
+
+    /* ==============================
+       Testimonials Carousel (lazy init)
+    ============================== */
+    setTimeout(() => {
+        if ($('.testimonial-carousel').length) {
+            $('.testimonial-carousel').owlCarousel({
+                autoplay: true,
+                autoplayTimeout: 6000,
+                smartSpeed: 800,
+                margin: 25,
+                loop: true,
+                dots: true,
+                nav: false,
+                responsive: {
+                    0: { items: 1 },
+                    768: { items: 2 },
+                    992: { items: 3 }
+                }
+            });
+        }
+    }, 1100);
+
 })(jQuery);
-
