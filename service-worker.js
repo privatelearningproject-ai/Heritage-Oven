@@ -27,9 +27,12 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   // For Google Apps Script API calls, return a properly formatted JSON offline fallback
   if (e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com')) {
-    e.respondWith(
-      fetch(e.request).catch(() => new Response(JSON.stringify({ success: false, message: "Offline Mode" }), { headers: { 'Content-Type': 'application/json' } }))
-    );
+    // Only intercept GET requests. Let the browser handle POST requests natively to prevent Google 302 Redirect CORS bugs!
+    if (e.request.method === 'GET') {
+      e.respondWith(
+        fetch(e.request).catch(() => new Response(JSON.stringify({ success: false, message: "Offline Mode" }), { headers: { 'Content-Type': 'application/json' } }))
+      );
+    }
     return;
   }
 

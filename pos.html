@@ -618,6 +618,7 @@ html,body{ height:100%; overflow:hidden; background:var(--bg); font-family:'DM S
     <input class="url-inp" id="loginUser" type="text" placeholder="👤 Username">
     <input class="url-inp" id="loginPass" type="password" placeholder="🔑 Password">
     <button class="btn-connect" id="loginBtn" style="margin-top:10px;" onclick="processLogin()">🔓 Login</button>
+    <button style="margin-top:14px; width:100%; border:none; background:transparent; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;" onclick="resetSetup()">⚙️ Change Setup URL</button>
   </div>
 </div>
 
@@ -836,6 +837,12 @@ function saveAndConnect() {
   checkLogin();
 }
 
+function resetSetup() {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem("ho_session");
+  location.reload();
+}
+
 function checkLogin() {
   if (localStorage.getItem("ho_session") === "true") {
     document.getElementById("loginOverlay").style.display = "none";
@@ -854,7 +861,7 @@ async function processLogin() {
   btn.innerText = "⏳ Verifying...";
   btn.disabled = true;
   try {
-    const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }), headers: { "Content-Type": "text/plain" } });
+    const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }), headers: { "Content-Type": "text/plain" }, redirect: "follow" });
     const data = await res.json();
     if (data.success) {
       localStorage.setItem("ho_session", "true");
@@ -1390,7 +1397,8 @@ async function processSyncQueue(isImmediate = false) {
       const response = await fetch(SCRIPT_URL, {
         method:"POST",
         body:JSON.stringify({ action:"saveOrder", ...orderData }),
-        headers:{ "Content-Type":"text/plain" }
+        headers:{ "Content-Type":"text/plain" },
+        redirect: "follow"
       });
       if (response.ok || response.type === 'opaque') {
         syncQueue.splice(i, 1);
