@@ -36,8 +36,7 @@ html,body{ height:100%; overflow:hidden; background:var(--bg); font-family:'DM S
 /* ════════════════════════════════
    SETUP OVERLAY
 ════════════════════════════════ */
-#setupOverlay,
-#loginOverlay{
+#setupOverlay{
   position:fixed; inset:0; z-index:999;
   background:var(--bg);
   display:flex; align-items:center; justify-content:center;
@@ -607,21 +606,6 @@ html,body{ height:100%; overflow:hidden; background:var(--bg); font-family:'DM S
   </div>
 </div>
 
-<!-- ════ LOGIN OVERLAY ════ -->
-<div id="loginOverlay" style="display:none;">
-  <div class="setup-card">
-    <div class="setup-brand">
-      <div class="setup-logo" style="background:var(--card); color:var(--cream); border:1px solid var(--border2); text-shadow:none;">🔒</div>
-      <h1>POS Login</h1>
-      <p>Authorized Personnel Only</p>
-    </div>
-    <input class="url-inp" id="loginUser" type="text" placeholder="👤 Username">
-    <input class="url-inp" id="loginPass" type="password" placeholder="🔑 Password">
-    <button class="btn-connect" id="loginBtn" style="margin-top:10px;" onclick="processLogin()">🔓 Login</button>
-    <button style="margin-top:14px; width:100%; border:none; background:transparent; color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer;" onclick="resetSetup()">⚙️ Change Setup URL</button>
-  </div>
-</div>
-
 <!-- ════ APP ════ -->
 <div id="app">
 
@@ -633,7 +617,6 @@ html,body{ height:100%; overflow:hidden; background:var(--bg); font-family:'DM S
       <div class="h-sub">Bakery POS</div>
     </div>
     <div class="h-actions">
-      <button class="sync-pill" onclick="logout()">🚪 Logout</button>
       <button class="sync-pill" onclick="showAnalytics('daily')">Daily</button>
       <button class="sync-pill" onclick="showAnalytics('monthly')">Monthly</button>
       <button class="sync-pill" onclick="showAnalytics('quarterly')">Quarterly</button>
@@ -821,7 +804,7 @@ window.onload = () => {
   updatePendingBadge();
   if (SCRIPT_URL) {
     document.getElementById("setupOverlay").style.display = "none";
-    checkLogin();
+    loadProducts();
   }
 };
 
@@ -834,52 +817,7 @@ function saveAndConnect() {
   SCRIPT_URL = url;
   localStorage.setItem(STORAGE_KEY, url);
   document.getElementById("setupOverlay").style.display = "none";
-  checkLogin();
-}
-
-function resetSetup() {
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem("ho_session");
-  location.reload();
-}
-
-function checkLogin() {
-  if (localStorage.getItem("ho_session") === "true") {
-    document.getElementById("loginOverlay").style.display = "none";
-    loadProducts();
-  } else {
-    document.getElementById("loginOverlay").style.display = "flex";
-  }
-}
-
-async function processLogin() {
-  const user = document.getElementById("loginUser").value.trim().toLowerCase();
-  const pass = document.getElementById("loginPass").value.trim();
-  const btn = document.getElementById("loginBtn");
-  if (!user || !pass) return showToast("⚠️ Enter username and password", true);
-
-  btn.innerText = "⏳ Verifying...";
-  btn.disabled = true;
-  try {
-    const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }), headers: { "Content-Type": "text/plain" }, redirect: "follow" });
-    const data = await res.json();
-    if (data.success) {
-      localStorage.setItem("ho_session", "true");
-      document.getElementById("loginOverlay").style.display = "none";
-      loadProducts();
-      showToast("✅ Login successful");
-    } else { showToast("❌ Invalid credentials", true); }
-  } catch (e) { showToast("⚠️ Network error. Try again.", true); } finally { btn.innerText = "🔓 Login"; btn.disabled = false; }
-}
-
-function logout() {
-  if(confirm("Are you sure you want to logout?")) {
-    localStorage.removeItem("ho_session");
-    document.getElementById("loginOverlay").style.display = "flex";
-    document.getElementById("loginUser").value = "";
-    document.getElementById("loginPass").value = "";
-    showToast("🚪 Logged out");
-  }
+  loadProducts();
 }
 
 // ══════════════════════════════════════════
@@ -1397,8 +1335,7 @@ async function processSyncQueue(isImmediate = false) {
       const response = await fetch(SCRIPT_URL, {
         method:"POST",
         body:JSON.stringify({ action:"saveOrder", ...orderData }),
-        headers:{ "Content-Type":"text/plain" },
-        redirect: "follow"
+        headers: { "Content-Type": "text/plain;charset=utf-8" }
       });
       if (response.ok || response.type === 'opaque') {
         syncQueue.splice(i, 1);
