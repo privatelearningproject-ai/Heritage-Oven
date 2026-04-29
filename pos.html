@@ -832,6 +832,7 @@ async function loadProducts() {
   if (cached) {
     try {
       allProducts = JSON.parse(cached);
+      allProducts = allProducts.map((p, i) => ({ ...p, _uid: p._uid || (p.sheet ? (p.sheet + "_" + p.row) : ("uid_" + i)) }));
       renderCategoryTabs([...new Set(allProducts.map(p => p.cat))].filter(Boolean));
       renderProducts();
     } catch(e) {}
@@ -849,17 +850,17 @@ async function loadProducts() {
     const data = await res.json();
     if (!data.success) throw new Error("Sheet error");
 
-    allProducts = data.products.map(p => ({ ...p, cat: p.category || p.cat || getCategory(p.name) }));
+    allProducts = data.products.map((p, i) => ({ ...p, _uid: p.sheet ? (p.sheet + "_" + p.row) : ("uid_" + i), cat: p.category || p.cat || getCategory(p.name) }));
     localStorage.setItem("ho_products_v2", JSON.stringify(allProducts)); // Save to cache
     
     // Force update prices of items currently in the cart to prevent cached prices from generating wrong bills!
-    for (let id in cart) {
-      const freshItem = allProducts.find(p => p.id === id);
+    for (let uid in cart) {
+      const freshItem = allProducts.find(p => p._uid === uid);
       if (freshItem) {
-        cart[id].price = freshItem.price;
-        cart[id].name = freshItem.name;
+        cart[uid].price = freshItem.price;
+        cart[uid].name = freshItem.name;
       } else {
-        delete cart[id]; // Remove if product no longer exists in sheet
+        delete cart[uid]; // Remove if product no longer exists in sheet
       }
     }
     updateCartUI();
@@ -932,25 +933,25 @@ function renderProducts() {
 }
 
 function productCard(p) {
-  const inCart   = cart[p.id] ? cart[p.id].qty : 0;
+  const inCart   = cart[p._uid] ? cart[p._uid].qty : 0;
   const stockCls = p.stock <= 0 ? "out" : p.stock <= p.threshold ? "low" : "";
   const stockTxt = p.stock <= 0 ? "Out of stock" :
                    p.stock <= p.threshold ? `⚠️ Only ${p.stock} left` : `${p.stock} in stock`;
   const color    = getCatColor(p.cat) || "#f5a623";
   const emoji    = getEmoji(p.name, p.cat);
-  const click    = p.stock > 0 ? `addToCart('${p.id}')` : "";
+  const click    = p.stock > 0 ? `addToCart('${p._uid}')` : "";
 
   let actionHtml = "";
   if (p.stock > 0) {
     if (inCart > 0) {
       actionHtml = `
       <div class="qty-ctrl" style="transform: scale(0.85); transform-origin: right; margin-right: -4px;">
-        <button class="qb m" onclick="event.stopPropagation(); changeQty('${p.id}',-1)">−</button>
+        <button class="qb m" onclick="event.stopPropagation(); changeQty('${p._uid}',-1)">−</button>
         <span class="qv">${inCart}</span>
-        <button class="qb p" onclick="event.stopPropagation(); addToCart('${p.id}')">+</button>
+        <button class="qb p" onclick="event.stopPropagation(); addToCart('${p._uid}')">+</button>
       </div>`;
     } else {
-      actionHtml = `<button class="pc-add" style="background:${color}" onclick="event.stopPropagation();addToCart('${p.id}')">+</button>`;
+      actionHtml = `<button class="pc-add" style="background:${color}" onclick="event.stopPropagation();addToCart('${p._uid}')">+</button>`;
     }
   }
 
@@ -1015,14 +1016,14 @@ function showAnalytics(type) {
 // ══════════════════════════════════════════
 //  CART
 // ══════════════════════════════════════════
-function addToCart(id) {
-  const p = allProducts.find(x => x.id == id);
+function addToCart(uid) {
+  const p = allProducts.find(x => x._uid === uid);
   if (!p || p.stock <= 0) return;
-  if (cart[id]) {
-    if (cart[id].qty >= p.stock) { showToast("⚠️ Max stock reached!", true); return; }
-    cart[id].qty++;
+  if (cart[uid]) {
+    if (cart[uid].qty >= p.stock) { showToast("⚠️ Max stock reached!", true); return; }
+    cart[uid].qty++;
   } else {
-    cart[id] = { ...p, qty: 1 };
+    cart[uid] = { ...p, qty: 1 };
   }
   updateCartUI();
   renderProducts();
@@ -1031,17 +1032,17 @@ function addToCart(id) {
   showToast(`${getEmoji(p.name, p.cat)} Added: ${p.name}`);
 }
 
-function changeQty(id, delta) {
-  if (!cart[id]) return;
-  cart[id].qty += delta;
-  if (cart[id].qty <= 0) delete cart[id];
+function changeQty(uid, delta) {
+  if (!cart[uid]) return;
+  cart[uid].qty += delta;
+  if (cart[uid].qty <= 0) delete cart[uid];
   updateCartUI();
   renderProducts();
   renderCartDrawer();
 }
 
-function removeCartItem(id) {
-  delete cart[id];
+function removeCartItem(uid) {
+  delete cart[uid];
   updateCartUI();
   renderProducts();
   renderCartDrawer();
@@ -1100,13 +1101,13 @@ function renderCartDrawer() {
       <div class="ci-top">
         <span class="ci-emoji">${getEmoji(item.name, item.cat)}</span>
         <div class="ci-name">${item.name}</div>
-        <button class="ci-rm" onclick="removeCartItem('${item.id}')">✕</button>
+        <button class="ci-rm" onclick="removeCartItem('${item._uid}')">✕</button>
       </div>
       <div class="ci-bottom">
         <div class="qty-ctrl">
-          <button class="qb m" onclick="changeQty('${item.id}',-1)">−</button>
+          <button class="qb m" onclick="changeQty('${item._uid}',-1)">−</button>
           <span class="qv">${item.qty}</span>
-          <button class="qb p" onclick="changeQty('${item.id}',1)">+</button>
+          <button class="qb p" onclick="changeQty('${item._uid}',1)">+</button>
         </div>
         <div style="text-align:right">
           <div class="ci-amt" style="color:${color}">₹${item.price * item.qty}</div>
