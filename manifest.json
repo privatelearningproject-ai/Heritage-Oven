@@ -1,0 +1,20 @@
+{
+  "name": "Heritage Oven POS",
+  "short_name": "Heritage POS",
+  "start_url": "./pos.html",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/f5a623/0d0d0d?text=H",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://placehold.co/512x512/f5a623/0d0d0d?text=H",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
