@@ -9,7 +9,7 @@ const displayItems = [
   { 
     name: "Butter Croissants", 
     price: "₹85", 
-    image: "/img/product-1.webp",
+    image: "/img/products/butter-croissant.jpg",
     tag: "Flaky & Golden"
   },
   { 
@@ -27,13 +27,13 @@ const displayItems = [
   { 
     name: "Red Velvet Pastry", 
     price: "₹85", 
-    image: "/img/product-2.webp",
+    image: "/img/products/red-velvet-pastry.jpg",
     tag: "Classic Delight"
   },
   { 
     name: "Paneer Kulcha", 
     price: "₹60", 
-    image: "/img/product-3.webp",
+    image: "/img/products/paneer-kulcha.jpeg",
     tag: "Savory Favorite"
   },
 ];
