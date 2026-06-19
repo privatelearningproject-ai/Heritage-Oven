@@ -5,34 +5,58 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* THE WARM MODERNISM PALETTE */
-  --background: #FFFFFF;
-  --foreground: #1A1714; /* Deep Charcoal/Brown */
+  /* HERITAGE OVEN COLOR SYSTEM — LUXURY EDITORIAL */
   
-  --primary: #2C241E; /* Rich Espresso */
-  --primary-foreground: #F8F5F2;
-  
-  --accent: #B08E6B; /* Muted Gold/Bread Crust */
-  --accent-foreground: #FFFFFF;
-  
-  --muted: #F8F5F2; /* Soft Flour White */
+  /* Base — Stone/Cream */
+  --background: #FDFAF6;
+  --foreground: #2C241E; /* Rich Espresso Brown */
   --muted-foreground: #6A6058;
-  
+  --muted: #E9E2DB;
   --card: #FFFFFF;
-  --card-foreground: #1A1714;
-  
-  --popover: #FFFFFF;
-  --popover-foreground: #1A1714;
-  
-  --secondary: #E9E2DB; /* Warm Paper */
-  --secondary-foreground: #2C241E;
-  
-  --destructive: #7F1D1D;
   --border: #E9E2DB;
   --input: #E9E2DB;
-  --ring: #B08E6B;
   
-  --radius: 0.25rem; /* Sophisticated sharp edges with tiny rounding */
+  /* Brand Gold — Muted Luxury Gold */
+  --accent: #B08E6B;
+  --accent-foreground: #FFFFFF;
+  --gold-tint: #FDF4E7;
+  --gold-deep: #8C6D4F;
+  --gold-text: #2C241E;
+  
+  /* Celebration Red — Cakes, Party */
+  --rose-tint: #FFF1F2;
+  --rose-mid: #FB7185;
+  --rose-deep: #E11D48;
+  --rose-text: #881337;
+  
+  /* Snack Orange — Impulse, Quick Bites */
+  --orange-tint: #FFF7ED;
+  --orange-mid: #FB923C;
+  --orange-deep: #EA580C;
+  --orange-text: #7C2D12;
+  
+  /* Wellness Green — Healthy Snacks */
+  --green-tint: #F0FDF4;
+  --green-mid: #4ADE80;
+  --green-deep: #16A34A;
+  --green-text: #14532D;
+  
+  /* Tea-time Brown — Biscuits, Namkeen */
+  --brown-tint: #FDF4E7;
+  --brown-mid: #C2955A;
+  --brown-deep: #92400E;
+  --brown-text: #451A03;
+  
+  /* WhatsApp Green */
+  --wa-tint: #DCFCE7;
+  --wa-brand: #25D366;
+  --wa-hover: #128C7E;
+
+  --ring: #B08E6B;
+  --primary: #2C241E; /* Primary is Espresso */
+  --primary-foreground: #FDFAF6;
+  
+  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -44,11 +68,36 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-gold-tint: var(--gold-tint);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-text: var(--gold-text);
+  
+  --color-rose-tint: var(--rose-tint);
+  --color-rose-mid: var(--rose-mid);
+  --color-rose-deep: var(--rose-deep);
+  --color-rose-text: var(--rose-text);
+  
+  --color-orange-tint: var(--orange-tint);
+  --color-orange-mid: var(--orange-mid);
+  --color-orange-deep: var(--orange-deep);
+  --color-orange-text: var(--orange-text);
+  
+  --color-green-tint: var(--green-tint);
+  --color-green-mid: var(--green-mid);
+  --color-green-deep: var(--green-deep);
+  --color-green-text: var(--green-text);
+  
+  --color-brown-tint: var(--brown-tint);
+  --color-brown-mid: var(--brown-mid);
+  --color-brown-deep: var(--brown-deep);
+  --color-brown-text: var(--brown-text);
+  
+  --color-wa-brand: var(--wa-brand);
+  --color-wa-hover: var(--wa-hover);
 
   --font-heading: var(--font-playfair);
   --font-body: var(--font-inter);
@@ -69,11 +118,11 @@
   
   /* Selection styling */
   ::selection {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-accent/30 text-foreground;
   }
 }
 
-/* Custom Utilities for the Flagship Experience */
+/* Custom Utilities */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -81,7 +130,11 @@
   .glass {
     @apply bg-white/70 backdrop-blur-md border border-white/20;
   }
-  .parallax-container {
-    perspective: 1000px;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

@@ -1,15 +1,11 @@
 "use client";
 
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function StoryPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-
+    <div className="pt-[100px] md:pt-[140px]">
       {/* 1. HERO STORY - IMMERSIVE OVERLAP */}
       <section className="relative pt-40 pb-20 md:pt-60 md:pb-40 overflow-hidden">
         <div className="container mx-auto px-6 md:px-12">
@@ -132,8 +128,6 @@ export default function StoryPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </main>
+    </div>
   );
 }

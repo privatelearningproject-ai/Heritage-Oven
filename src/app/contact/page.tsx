@@ -1,7 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import Link from "next/link";
@@ -9,9 +7,7 @@ import Image from "next/image";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#FAF8F5]">
-      <Navbar />
-
+    <div className="pt-[100px] md:pt-[140px]">
       {/* 1. HEADER - CONCIERGE STYLE */}
       <section className="relative pt-40 pb-20 md:pt-60 md:pb-40 bg-[#1A1714] text-white">
         <div className="container mx-auto px-6 md:px-12 text-center">
@@ -118,8 +114,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </main>
+    </div>
   );
 }

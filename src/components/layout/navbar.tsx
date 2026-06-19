@@ -1,149 +1,221 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { WhatsAppButton } from '@/components/shared/WhatsAppButton'
+import { cn } from '@/lib/utils'
 
-const navLinks = [
-  { name: "Story", href: "/about" },
-  { name: "Collection", href: "/our-products" },
-  { name: "Visit", href: "/contact" },
-];
-
-export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export const Navbar: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      setIsScrolled(window.scrollY > 40)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
+
+  const isHomePage = pathname === '/'
+  const isPOS = pathname === '/pos'
+  const navSolid = !isHomePage || isScrolled
+
+  if (isPOS) return null
 
   return (
-    <>
-      <nav
-        className={cn(
-          "fixed top-0 left-0 w-full z-[100] transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]",
-          isScrolled 
-            ? "py-4 bg-white/80 backdrop-blur-xl border-b border-black/5" 
-            : "py-10 bg-transparent"
-        )}
-      >
-        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Brand - Oversized & Minimal */}
-          <Link href="/" className="group relative">
-            <span className={cn(
-              "text-2xl md:text-3xl font-heading font-bold tracking-tighter transition-colors duration-500",
-              isScrolled ? "text-primary" : "text-white"
-            )}>
-              Heritage Oven
-            </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent transition-all duration-500 group-hover:w-full" />
+    <nav 
+      className={cn(
+        "fixed left-0 w-full z-50 transition-all duration-700",
+        isScrolled ? "top-0 bg-white/95 backdrop-blur-xl shadow-sm py-4" : "top-10 py-8",
+        !isScrolled && navSolid ? "bg-white/95 backdrop-blur-xl shadow-sm py-4" : "",
+        !isScrolled && !navSolid ? "bg-transparent py-8" : ""
+      )}
+    >
+      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+        
+        {/* LEFT NAV: Editorial Contrast */}
+        <div className="hidden md:flex items-center gap-10 flex-1">
+          <Link 
+            href="/about" 
+            className={cn(
+              "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+          >
+            Story
           </Link>
-
-          {/* Desktop Navigation - Spaced Out & Elegant */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={cn(
-                  "text-[10px] font-bold tracking-[0.3em] uppercase transition-all duration-500 hover:text-accent",
-                  isScrolled ? "text-primary/60" : "text-white/60"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
-            
-            {/* The Signature CTA */}
-            <Link
-              href="https://wa.me/8178769036"
+          <div 
+            className="relative"
+            onMouseEnter={() => setActiveMegaMenu('explore')}
+            onMouseLeave={() => setActiveMegaMenu(null)}
+          >
+            <Link 
+              href="/our-products" 
               className={cn(
-                "px-8 py-3 text-[10px] font-bold tracking-[0.3em] uppercase border transition-all duration-700",
-                isScrolled 
-                  ? "border-primary text-primary hover:bg-primary hover:text-white" 
-                  : "border-white/30 text-white hover:bg-white hover:text-primary"
+                "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent flex items-center gap-1",
+                navSolid ? "text-foreground" : "text-white"
               )}
             >
-              Order Online
+              Explore
+              <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </Link>
-          </div>
-
-          {/* Mobile Toggle */}
-          <button
-            className="md:hidden p-2 group"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <div className="relative w-6 h-5">
-              <span className={cn(
-                "absolute h-[1.5px] w-full bg-current transition-all duration-500",
-                isMobileMenuOpen ? "rotate-45 top-2" : "top-0",
-                isScrolled ? "text-primary" : "text-white"
-              )} />
-              <span className={cn(
-                "absolute h-[1.5px] w-full bg-current transition-all duration-500",
-                isMobileMenuOpen ? "opacity-0" : "top-2",
-                isScrolled ? "text-primary" : "text-white"
-              )} />
-              <span className={cn(
-                "absolute h-[1.5px] w-full bg-current transition-all duration-500",
-                isMobileMenuOpen ? "-rotate-45 top-2" : "top-4",
-                isScrolled ? "text-primary" : "text-white"
-              )} />
+            
+            {/* MEGA MENU: Cinematic Overlay */}
+            <div className={cn(
+              "absolute top-full -left-10 w-[750px] bg-white shadow-2xl p-10 mt-6 grid grid-cols-3 gap-10 transition-all duration-500 border border-stone-50",
+              activeMegaMenu === 'explore' ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4"
+            )}>
+              <div className="space-y-6">
+                <h4 className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent border-b border-stone-100 pb-2">Celebrations</h4>
+                <ul className="space-y-4 text-[11px] font-semibold text-foreground/80">
+                  <li><Link href="/collections/celebration" className="hover:text-accent transition-colors">Signature Cakes</Link></li>
+                  <li><Link href="/collections/birthday" className="hover:text-accent transition-colors">Birthday Boutique</Link></li>
+                  <li><Link href="/our-products?filter=party" className="hover:text-accent transition-colors">Party Essentials</Link></li>
+                </ul>
+              </div>
+              <div className="space-y-6">
+                <h4 className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent border-b border-stone-100 pb-2">Daily Rituals</h4>
+                <ul className="space-y-4 text-[11px] font-semibold text-foreground/80">
+                  <li><Link href="/collections/quick-bites" className="hover:text-accent transition-colors">Quick Bites</Link></li>
+                  <li><Link href="/collections/tea-time" className="hover:text-accent transition-colors">Tea-Time Ritual</Link></li>
+                  <li><Link href="/collections/wellness-pantry" className="hover:text-accent transition-colors">Wellness Pantry</Link></li>
+                </ul>
+              </div>
+              <div className="space-y-6">
+                <h4 className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent border-b border-stone-100 pb-2">Collections</h4>
+                <ul className="space-y-4 text-[11px] font-semibold text-foreground/80">
+                  <li><Link href="/collections/best-sellers" className="hover:text-accent transition-colors">The Favorites</Link></li>
+                  <li><Link href="/collections/under-99" className="hover:text-accent transition-colors">The Pantry Under ₹99</Link></li>
+                  <li><Link href="/our-products" className="hover:text-accent transition-colors italic">Browse Full Catalog →</Link></li>
+                </ul>
+              </div>
             </div>
+          </div>
+          <Link 
+            href="/cakes" 
+            className={cn(
+              "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+          >
+            Cakes
+          </Link>
+          <Link 
+            href="/breads" 
+            className={cn(
+              "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+          >
+            Breads
+          </Link>
+        </div>
+
+        {/* CENTER: Premium Logo Treatment */}
+        <div className="flex-none">
+          <Link href="/" className="flex flex-col items-center group">
+            <span className={cn(
+              "text-2xl md:text-4xl font-serif font-bold tracking-tight transition-colors duration-500",
+              navSolid ? "text-foreground" : "text-white"
+            )}>
+              HERITAGE OVEN
+            </span>
+            <span className={cn(
+              "text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-bold -mt-1 transition-colors duration-500",
+              navSolid ? "text-accent" : "text-accent/90"
+            )}>
+              Pure Tradition
+            </span>
+          </Link>
+        </div>
+
+        {/* RIGHT NAV: Sophisticated CTA */}
+        <div className="hidden md:flex items-center gap-10 flex-1 justify-end">
+          <Link 
+            href="/contact" 
+            className={cn(
+              "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+          >
+            Visit
+          </Link>
+          <WhatsAppButton 
+            productName="General Inquiry" 
+            variant="premium" 
+            className={cn(
+              "px-8 py-3.5",
+              !navSolid && "bg-white text-foreground hover:bg-accent hover:text-white"
+            )}
+          />
+        </div>
+
+        {/* Mobile: Minimalist Hamburger */}
+        <div className="md:hidden flex items-center gap-6">
+          <button 
+            className={cn(
+              "p-2 transition-colors",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+            onClick={toggleMobileMenu}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 8h16M4 16h16"} />
+            </svg>
           </button>
         </div>
-      </nav>
+      </div>
 
-      {/* Full-Screen Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 z-[90] bg-white flex flex-col items-center justify-center gap-8 md:hidden"
-          >
-            {navLinks.map((link, i) => (
-              <motion.div
-                key={link.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + i * 0.1 }}
-              >
-                <Link
-                  href={link.href}
-                  className="text-4xl font-heading font-bold text-primary hover:text-accent transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="mt-8"
-            >
-              <Link
-                href="https://wa.me/8178769036"
-                className="px-12 py-5 text-xs font-bold tracking-[0.3em] uppercase bg-primary text-white"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Order Online
-              </Link>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+      {/* MOBILE DRAWER: Editorial Style */}
+      <div className={cn(
+        "fixed inset-0 bg-foreground z-[60] transition-all duration-700 md:hidden",
+        isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      )}>
+        <div className="h-full flex flex-col p-12">
+          <div className="flex justify-between items-center mb-16">
+            <span className="text-xl font-serif font-bold text-background tracking-tighter">HERITAGE OVEN</span>
+            <button onClick={toggleMobileMenu} className="text-background/40">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <nav className="flex-1 space-y-12">
+            <div className="space-y-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent/60">Discover</p>
+              <ul className="space-y-8 text-4xl font-serif text-background italic leading-tight">
+                <li><Link href="/about" onClick={toggleMobileMenu}>The Story</Link></li>
+                <li><Link href="/our-products" onClick={toggleMobileMenu}>The Collection</Link></li>
+                <li><Link href="/cakes" onClick={toggleMobileMenu}>Cakes</Link></li>
+                <li><Link href="/breads" onClick={toggleMobileMenu}>Breads</Link></li>
+                <li><Link href="/collections/wellness-pantry" onClick={toggleMobileMenu}>Wellness</Link></li>
+                <li><Link href="/contact" onClick={toggleMobileMenu}>Visit Us</Link></li>
+              </ul>
+            </div>
+          </nav>
+
+          <div className="mt-auto">
+            <WhatsAppButton 
+              productName="General Inquiry" 
+              variant="premium" 
+              className="w-full py-6 bg-background text-foreground hover:bg-accent hover:text-white" 
+            />
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
 }

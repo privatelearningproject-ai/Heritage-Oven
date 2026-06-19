@@ -1,0 +1,202 @@
+{
+  "collections": [
+    {
+      "id": "premium_cakes",
+      "name": "Premium Cakes",
+      "description": "Indulge in our artisanal range of signature cakes. From rich Belgian chocolate to classic tropical flavors, each cake is a masterpiece handcrafted by Heritage Oven experts using the finest ingredients.",
+      "seo_title": "Order Premium Cakes Online | Signature Heritage Oven Celebrations",
+      "seo_meta_description": "Celebrate every occasion with Heritage Oven's premium cakes. Freshly baked, eggless options available. Same-day delivery for birthday cakes and anniversary specials.",
+      "featured_products": [
+        "Pineapple Cake",
+        "Black Forest",
+        "Brownie Cake",
+        "RockyRoad Almond Butterscotch",
+        "Choco Chips",
+        "Choco Vanilla"
+      ],
+      "customer_intent": "Celebrations, Gifting, Indulgence",
+      "homepage_placement": "Hero Section / Top Row"
+    },
+    {
+      "id": "birthday_specials",
+      "name": "Birthday Specials",
+      "description": "Make birthdays unforgettable with our curated selection of celebration-ready cakes and party supplies. Everything you need for the perfect surprise in one place.",
+      "seo_title": "Birthday Cakes & Party Supplies | Heritage Oven Birthday Boutique",
+      "seo_meta_description": "Discover the ultimate birthday collection at Heritage Oven. Premium birthday cakes, party balloons, and poppers to make your special day extra sweet.",
+      "featured_products": [
+        "Bunny baloons",
+        "Choco Chips",
+        "Brownie Cake",
+        "Black Forest",
+        "King Baloons",
+        "RockyRoad Almond Butterscotch",
+        "Monty Baloon",
+        "Choco Vanilla",
+        "Pineapple Cake"
+      ],
+      "customer_intent": "Planning a Birthday Party, Immediate Need",
+      "homepage_placement": "Featured Collections Grid"
+    },
+    {
+      "id": "tea_time_snacks",
+      "name": "Tea-Time Essentials",
+      "description": "Elevate your evening chai with our range of traditional Indian namkeens and premium biscuits. Authentic recipes that bring back the nostalgia of high-tea.",
+      "seo_title": "Tea-Time Snacks & Biscuits Online | Heritage Oven Traditional Savories",
+      "seo_meta_description": "Buy premium biscuits, namkeens, and mathis for the perfect tea-time experience. Authentic Indian snacks delivered fresh to your doorstep.",
+      "featured_products": [
+        "Peanut Biscuits",
+        "Jeera Biscuits",
+        "Milk Atta Patti Normal ( 400 GM)",
+        "Ratnam Mixture Namkeen",
+        "Soya Katori Namkeen",
+        "Jam Biscuits",
+        "Pudina Chips",
+        "Atta Patti Desi Ghee( 400 GM)",
+        "Atta Patti Desi Ghee( 200 GM)"
+      ],
+      "customer_intent": "Daily Routine, Pantry Restocking, Afternoon Cravings",
+      "homepage_placement": "Category Carousel"
+    },
+    {
+      "id": "healthy_snacking",
+      "name": "The Wellness Pantry",
+      "description": "Guilt-free munching for the health-conscious. Explore our range of premium makhanas, roasted snacks, and nutrient-dense treats that don't compromise on taste.",
+      "seo_title": "Healthy Snacks Online India | Roasted Makhanas & Low-Calorie Treats",
+      "seo_meta_description": "Snack smart with Heritage Oven's healthy collection. Premium roasted makhanas, diet snacks, and guilt-free munchies for your fitness journey.",
+      "featured_products": [
+        "Farmley RNF Makhana 14GM Peri Peri",
+        "Farmley RNF Makhana 14GM Tangy Tomato",
+        "Farmley RNF Makhana 14GM Cream & Onion",
+        "Farmley Munchies 25g*150p Amritsari Achari 20 Mrp",
+        "Farmley Makha Shaka Stix 25g Flaming Hot Ladi",
+        "Farmley Munchies 25g* Andhra masala (ladi)"
+      ],
+      "customer_intent": "Weight Management, Healthy Lifestyle, Guilt-Free Snacking",
+      "homepage_placement": "Specialty Banner"
+    },
+    {
+      "id": "kids_favorites",
+      "name": "Kids' Corner",
+      "description": "A delightful collection of colorful pastries, chocolate treats, and fun ice creams that children (and adults!) will love.",
+      "seo_title": "Kids' Favorite Snacks & Desserts | Fun Treats by Heritage Oven",
+      "seo_meta_description": "Shop the best treats for kids. From chocolate pastries to colorful ice cream cones, Heritage Oven has everything to make your little ones smile.",
+      "featured_products": [
+        "Choco Chips",
+        "Choco Crunch",
+        "Candy Mango",
+        "Choco Vanilla",
+        "Candy Orange",
+        "FARMLEY DATE BITES DARK CHOCO- ORANGE 160G MRP. 320",
+        "Mini Bar 10",
+        "Choco truffle"
+      ],
+      "customer_intent": "Treating Children, Small Celebrations",
+      "homepage_placement": "Playful Grid Section"
+    },
+    {
+      "id": "party_essentials",
+      "name": "Party Essentials",
+      "description": "Hosting made easy. From savory snacks like patties and rolls to balloons and decor, get everything delivered to ensure your party is a hit.",
+      "seo_title": "Party Supplies & Snacks Online | Host the Perfect Event with Heritage Oven",
+      "seo_meta_description": "One-stop shop for party essentials. Order savory snacks, patties, rolls, and party decorations online. Fast delivery for party planning.",
+      "featured_products": [
+        "Aloo Patty",
+        "Golden Curtain",
+        "King Baloons",
+        "Happy Bday Combo Set",
+        "Monty Baloon",
+        "Silver Curtain",
+        "Bunny baloons",
+        "Paneer Kulch",
+        "Paneer Tikka Roll"
+      ],
+      "customer_intent": "Event Hosting, Party Planning, Convenience",
+      "homepage_placement": "Secondary Carousel"
+    },
+    {
+      "id": "summer_refreshments",
+      "name": "Summer Refreshments",
+      "description": "Stay cool with our selection of chilled beverages and premium ice creams. The perfect antidote to the Indian summer.",
+      "seo_title": "Cold Drinks & Ice Creams Online | Summer Chill by Heritage Oven",
+      "seo_meta_description": "Beat the heat with Heritage Oven's summer collection. Chilled beverages, Amul lassis, and premium ice cream bars delivered cold.",
+      "featured_products": [
+        "Auqafast 500 ml water",
+        "Amul milk royal ilachi",
+        "Amul badam",
+        "Amul Kesar",
+        "Candy Mango",
+        "Candy Orange",
+        "Amul Lassi",
+        "Mini Bar 10",
+        "Amul Kesar Badam"
+      ],
+      "customer_intent": "Heat Relief, Instant Refreshment",
+      "homepage_placement": "Seasonal Banner (Summer)"
+    },
+    {
+      "id": "premium_desserts",
+      "name": "Artisanal Desserts",
+      "description": "Beyond cakes\u2014explore our exquisite range of pastries, cheesecakes, and premium sweet treats designed for the discerning palate.",
+      "seo_title": "Gourmet Pastries & Desserts Online | Premium Heritage Oven Treats",
+      "seo_meta_description": "Indulge in artisanal desserts. From Biscoff Cheesecakes to Belgian Devil Pastries, experience gourmet sweetness from Heritage Oven.",
+      "featured_products": [
+        "Pineapple Pastry",
+        "Biscoff Cheese Cake",
+        "Belgium Devil Pastery",
+        "Brownie Pastry",
+        "Choco truffle",
+        "Red Velvet"
+      ],
+      "customer_intent": "Gourmet Experience, Fine Dining at Home",
+      "homepage_placement": "Luxury Showcase Row"
+    },
+    {
+      "id": "fast_moving",
+      "name": "Quick Bites & Savories",
+      "description": "Our most popular savory snacks. Freshly baked patties, rolls, and sandwiches perfect for a quick lunch or an on-the-go snack.",
+      "seo_title": "Buy Fresh Patties & Rolls Online | Quick Savory Snacks India",
+      "seo_meta_description": "Freshly baked savory snacks delivered to you. Shop our popular Paneer Kulchas, Aloo Patties, and more for a quick and delicious bite.",
+      "featured_products": [
+        "Paneer Tikka Roll",
+        "Paneer Kulch",
+        "Aloo Patty",
+        "Samaso",
+        "Sandhwich",
+        "Brown bread sandwich"
+      ],
+      "customer_intent": "Hunger Pangs, Quick Lunch, Workplace Snacking",
+      "homepage_placement": "Main Grid"
+    },
+    {
+      "id": "best_sellers",
+      "name": "The Heritage Favorites",
+      "description": "The products our customers love the most. Our hall of fame featuring the top-rated cakes, snacks, and biscuits.",
+      "seo_title": "Bestselling Bakery Products | Most Loved by Heritage Oven Customers",
+      "seo_meta_description": "Explore the bestsellers at Heritage Oven. Our most popular cakes, snacks, and treats as rated by our loyal community.",
+      "featured_products": [
+        "Pineapple Pastry",
+        "Biscoff Cheese Cake",
+        "Belgium Devil Pastery",
+        "Choco truffle",
+        "Red Velvet",
+        "Atta Patti Desi Ghee( 400 GM)",
+        "Dry Fruits",
+        "Fanta small"
+      ],
+      "customer_intent": "Social Proof, Low-Risk Purchase, Quality Assurance",
+      "homepage_placement": "Top Rated / Trending Now"
+    }
+  ],
+  "suggested_homepage_flow": [
+    "premium_cakes",
+    "best_sellers",
+    "fast_moving",
+    "tea_time_snacks",
+    "healthy_snacking",
+    "birthday_specials",
+    "premium_desserts",
+    "summer_refreshments",
+    "kids_favorites",
+    "party_essentials"
+  ]
+}
