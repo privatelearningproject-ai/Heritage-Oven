@@ -144,6 +144,15 @@ export const Navbar: React.FC = () => {
         {/* RIGHT NAV: Sophisticated CTA */}
         <div className="hidden md:flex items-center gap-10 flex-1 justify-end">
           <Link 
+            href="/blog" 
+            className={cn(
+              "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
+              navSolid ? "text-foreground" : "text-white"
+            )}
+          >
+            Blog
+          </Link>
+          <Link 
             href="/contact" 
             className={cn(
               "text-[10px] font-bold tracking-[0.25em] uppercase transition-colors hover:text-accent",
@@ -202,6 +211,7 @@ export const Navbar: React.FC = () => {
                 <li><Link href="/cakes" onClick={toggleMobileMenu}>Cakes</Link></li>
                 <li><Link href="/breads" onClick={toggleMobileMenu}>Breads</Link></li>
                 <li><Link href="/collections/wellness-pantry" onClick={toggleMobileMenu}>Wellness</Link></li>
+                <li><Link href="/blog" onClick={toggleMobileMenu}>Blog</Link></li>
                 <li><Link href="/contact" onClick={toggleMobileMenu}>Visit Us</Link></li>
               </ul>
             </div>
